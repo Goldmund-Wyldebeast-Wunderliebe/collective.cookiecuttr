@@ -32,6 +32,9 @@ class CookieCuttrViewlet(BrowserView):
         if self.available():
             snippet = safe_unicode(js_template % (self.settings.cookiecuttr_text,
                                                   self.settings.cookiecuttr_accept_button,
+                                                  self.settings.cookiecuttr_decline_button,
+                                                  self.settings.cookiecuttr_what_are_they_url,
+                                                  self.settings.cookiecuttr_what_are_they_text,
                                                   ))
             return snippet
         return ""
@@ -54,8 +57,11 @@ js_template = """
         $(document).ready(function () {
             $.cookieCuttr({cookieAnalyticsMessage: "%s",
                            cookieAcceptButtonText: "%s",
+                           cookieDeclineButtonText: "%s",
                            cookieWhatAreTheyLink: false,
-                           cookieWhatAreLinkText: ''});
+                           cookieDeclineButton: true,
+                           cookieWhatAreTheyLink: "%s",
+                           cookieWhatAreLinkText: "%s"});
         })
     })(jQuery);
 </script>
