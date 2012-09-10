@@ -35,7 +35,6 @@ setup(name='collective.cookiecuttr',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          'plone.resource',
           'plone.app.registry',
           # -*- Extra requirements: -*-
       ],
