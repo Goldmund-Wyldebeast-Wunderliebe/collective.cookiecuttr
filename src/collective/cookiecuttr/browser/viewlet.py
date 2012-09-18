@@ -20,13 +20,16 @@ class CookieCuttrViewlet(BrowserView):
         self.request = request
         self.view = view
         self.manager = manager
-        self.settings = getUtility(IRegistry).forInterface(ICookieCuttrSettings)
+        try:
+            self.settings = getUtility(IRegistry).forInterface(ICookieCuttrSettings)
+        except:
+            self.settings = None
 
     def update(self):
         pass
 
     def available(self):
-        return self.settings.cookiecuttr_enabled
+        return self.settings and self.settings.cookiecuttr_enabled
 
     def render(self):
         if self.available():
