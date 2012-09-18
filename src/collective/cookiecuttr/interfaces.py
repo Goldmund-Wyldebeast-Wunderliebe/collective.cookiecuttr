@@ -39,14 +39,13 @@ class ICookieCuttrSettings(Interface):
     cookiecuttr_decline_button = schema.TextLine(title=_(u"Text to show in the Decline button"),
                                        description=_(u"", default=u""),
                                        required=False,
-                                       default=_(u"Decline"))
+                                       default=_(u""))
     cookiecuttr_what_are_they_url= schema.TextLine(title=_(u"URL to a site explaining what cookies are"),
                                        description=_(u"", default=u""),
                                        required=False,
-                                       default=_(u"http://"))
+                                       default=_(u""))
 
     cookiecuttr_what_are_they_text= schema.TextLine(title=_(u"Text to show in What Are Cookies URL"),
                                        description=_(u"", default=u""),
                                        required=False,
-                                       default=_(u"What are cookies?"))
-
+                                       default=_(u""))

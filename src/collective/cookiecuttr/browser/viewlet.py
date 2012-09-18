@@ -30,12 +30,27 @@ class CookieCuttrViewlet(BrowserView):
 
     def render(self):
         if self.available():
-            snippet = safe_unicode(js_template % (self.settings.cookiecuttr_text,
-                                                  self.settings.cookiecuttr_accept_button,
-                                                  self.settings.cookiecuttr_decline_button,
-                                                  self.settings.cookiecuttr_what_are_they_url,
-                                                  self.settings.cookiecuttr_what_are_they_text,
-                                                  ))
+
+            cuttr_dict = {}
+            if self.settings.cookiecuttr_text:
+                cuttr_dict['cookieAnalyticsMessage'] = str(self.settings.cookiecuttr_text)
+
+            if self.settings.cookiecuttr_accept_button:
+                cuttr_dict['cookieAcceptButtonText'] = str(self.settings.cookiecuttr_accept_button)
+            if self.settings.cookiecuttr_decline_button:
+                cuttr_dict['cookieDeclineButtonText'] = str(self.settings.cookiecuttr_decline_button,)
+                cuttr_dict['cookieDeclineButton'] = 'true'
+
+
+            if self.settings.cookiecuttr_what_are_they_url and self.settings.cookiecuttr_what_are_they_text:
+                cuttr_dict['cookieWhatAreTheyLink'] = str(self.settings.cookiecuttr_what_are_they_url)
+                cuttr_dict['cookieWhatAreLinkText'] = str(self.settings.cookiecuttr_what_are_they_text)
+            else:
+                cuttr_dict['cookieWhatAreTheyLink'] = 'false'
+                cuttr_dict['cookieWhatAreLinkText'] = ''
+
+
+            snippet = safe_unicode(js_template % str(cuttr_dict) )
             return snippet
         return ""
 
@@ -55,14 +70,8 @@ js_template = """
 
     (function($) {
         $(document).ready(function () {
-            $.cookieCuttr({cookieAnalyticsMessage: "%s",
-                           cookieAcceptButtonText: "%s",
-                           cookieDeclineButtonText: "%s",
-                           cookieWhatAreTheyLink: false,
-                           cookieDeclineButton: true,
-                           cookieWhatAreTheyLink: "%s",
-                           cookieWhatAreLinkText: "%s"});
-        })
+            $.cookieCuttr(%s);
+        });
     })(jQuery);
 </script>
 
