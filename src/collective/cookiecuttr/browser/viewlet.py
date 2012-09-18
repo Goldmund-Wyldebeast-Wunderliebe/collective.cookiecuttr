@@ -73,7 +73,8 @@ js_template = """
 
     (function($) {
         $(document).ready(function () {
-            $.cookieCuttr(%s);
+            if($.cookieCuttr)
+                $.cookieCuttr(%s);
         });
     })(jQuery);
 </script>
