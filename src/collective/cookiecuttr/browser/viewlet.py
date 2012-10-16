@@ -61,12 +61,19 @@ class CookieCuttrViewlet(BrowserView):
 class CookieCuttrAwareAnalyticsViewlet(AnalyticsViewlet):
 
     def render(self):
+        # Retrieve settings from registry
+        settings = getUtility(IRegistry).forInterface(ICookieCuttrSettings)
+        available = settings and settings.cookiecuttr_enabled
+
+        # Always render if CookieCuttr is 'Not available'
+        if not available:
+            return super(CookieCuttrAwareAnalyticsViewlet, self).render()
+
+        # Check value of cookie
         if self.request.cookies.get('cc_cookie_accept',None):
             return super(CookieCuttrAwareAnalyticsViewlet, self).render()
         else:
-            return ""
-
-
+            return ""   
 
 js_template = """
 <script type="text/javascript">
